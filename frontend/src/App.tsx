@@ -1,8 +1,12 @@
+import FriendList from "./components/FriendList"
+import Navbar from "./components/Navbar"
+
 export default function App() {
     return (
-        <div className="bg-slate-900">
-            Hello world
-        </div>
+        <>
+        <Navbar />
+        <FriendList />
+        </>
     )
 }
 

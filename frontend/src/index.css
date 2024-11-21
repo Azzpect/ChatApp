@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .primary-heading {
+        @apply text-white font-black text-3xl
+    }
+}
