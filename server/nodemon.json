@@ -4,5 +4,5 @@
     "watch": ["dist/"],
     "ext": "js,json",
     "ignore": ["node_modules/"],
-    "delay": 2500
+    "delay": 1000
 }
