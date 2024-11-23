@@ -1,13 +1,20 @@
 import express, { Express, Request, Response } from "express";
 import { connectToDB } from "./db";
 import { userRouter } from "./routes/userRouter";
+import cors from "cors";
 
 const app: Express = express();
-const port: unknown = process.env.PORT
-
+const port: string | unknown = process.env.PORT
+const corsOptions = {
+    origin: ['http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
 
 connectToDB()
 app.use(express.json())
+app.use(cors(corsOptions))
 
 app.get("/", (req: Request, res: Response) => {
     res.send("hello world")

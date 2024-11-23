@@ -6,14 +6,14 @@ import * as jwt from "jsonwebtoken";
 
 export async function createNewUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const {username, password, profilePic} = req.body
+        const {username, email, password, profilePic} = req.body
 
-        if(await isUserAlreadyExist(username))
+        if(await isUserAlreadyExist(username, email))
             throw new UserExistError()
 
         let userPassword = jwt.sign(password, (process.env.PRIVATE_KEY as string))
         let userId = jwt.sign({username: username, password: userPassword}, (process.env.PRIVATE_KEY as string))
-        let user = new UserModel({userId: userId, username: username, password: userPassword, profilePic: profilePic})
+        let user = new UserModel({userId: userId, username: username, email: email, password: userPassword, profilePic: profilePic})
         await user.save()
         logger.info(`User created with userId: ${userId}`)
         req.body.status = {msg: "success", code: 201};
@@ -38,7 +38,8 @@ class UserExistError extends Error {
     }
 }
 
-async function isUserAlreadyExist(username: string): Promise<boolean> {
-    let user = await UserModel.findOne({username: username})
+async function isUserAlreadyExist(username: string, email: string): Promise<boolean> {
+    let user = await UserModel.findOne({username: username}) || await UserModel.findOne({email: email})
     return user != null
+
 }

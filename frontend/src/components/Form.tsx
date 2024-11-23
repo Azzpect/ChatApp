@@ -16,7 +16,27 @@ export default function Form() {
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
-        console.log(formData);
+        const formObj: {[key: string]: string} = {}
+        formData.forEach((value, key) => {
+            formObj[key] = value as string
+        })
+        console.log(formObj);
+        try{
+            if(formType === 1) {
+                const res = await fetch("http://127.0.0.1:8080/create-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formObj)
+                })
+                const data = await res.json()
+                console.log(data);
+            }
+        }
+        catch(err) {
+            console.log((err as Error).message);
+        }
     }
     
 
