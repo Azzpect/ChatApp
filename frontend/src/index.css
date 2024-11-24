@@ -3,10 +3,56 @@
 @tailwind utilities;
 
 @layer components {
+    /* body {
+        overflow-x: hidden;
+    } */
     .primary-heading {
-        @apply text-white font-black text-3xl
+        @apply text-white font-black text-3xl;
+    }
+    .auth-input-container {
+        @apply mb-2;
     }
     .auth-input {
-        @apply outline-none rounded-lg pl-2 py-2 text-lg my-3
+        @apply outline-none rounded-lg pl-2 py-2 text-lg;
+    }
+    .auth-input-error-text {
+        @apply my-0 hidden text-xs font-semibold self-start pl-5;
+    }
+    .notification {
+        @apply py-4 text-white font-semibold rounded-md absolute top-8 -right-full cursor-pointer;
+    }
+    .animate-bar {
+        animation: animation-bar 3s linear forwards;
+    }
+    .animate-slide-out {
+        animation: animation-slide-out 0.2s linear forwards;
+    }
+    .animate-slide-in {
+        animation: animation-slide-in 0.2s linear forwards;
+    }
+
+    @keyframes animation-bar {
+        from {
+            width: 100%;
+        }
+        to {
+            width: 0%;
+        }
+    }
+    @keyframes animation-slide-in {
+        from {
+            right: -100%;
+        }
+        to {
+            right: 1.25rem;
+        }
+    }
+    @keyframes animation-slide-out {
+        from {
+            right: 1.25rem;
+        }
+        to {
+            right: -100%;
+        }
     }
 }

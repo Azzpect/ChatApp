@@ -6,7 +6,9 @@ import * as jwt from "jsonwebtoken";
 
 export async function createNewUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const {username, email, password, profilePic} = req.body
+        const {username, email, password} = req.body
+
+        let profilePic = "http://localhost:8080/profilepics/default.svg"
 
         if(await isUserAlreadyExist(username, email))
             throw new UserExistError()
@@ -16,15 +18,15 @@ export async function createNewUser(req: Request, res: Response, next: NextFunct
         let user = new UserModel({userId: userId, username: username, email: email, password: userPassword, profilePic: profilePic})
         await user.save()
         logger.info(`User created with userId: ${userId}`)
-        req.body.status = {msg: "success", code: 201};
+        req.body.queryData = {status: "success", msg: "User created successfully!", useId: userId, code: 201};
     } catch (error) {
         if(error instanceof UserExistError) {
             logger.error(`Error occurred: ${(error as Error).message}`)
-            req.body.status = {msg: error.message, code: 400}
+            req.body.queryData = {status: "error", msg: error.message, code: 400}
         }
         else {
             logger.error(`Error occurred: ${(error as Error).message}`)
-            req.body.status = {msg: "error", code: 400}
+            req.body.queryData = {status: "error", msg: "error", code: 400}
         }
     }
     finally {

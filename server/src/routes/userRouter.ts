@@ -9,6 +9,8 @@ export const userRouter = Router();
 
 
 userRouter.post("/create-user", createNewUser, (req: Request, res: Response) => {
-    const {status} = req.body
-    res.status(status.code).json({message: status.msg})
+    const {queryData} = req.body
+    res.status(queryData.code)
+    delete queryData.code
+    res.json({...queryData})
 })
