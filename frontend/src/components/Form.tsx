@@ -20,8 +20,10 @@ export default function Form() {
 
     const authenticateUser = async () => {
         const userId: string | undefined = localStorage.getItem("userId")?.trim()
-        if(userId === undefined || userId === "")
+        if(userId === undefined || userId === "") {
             setValidUser(false)
+            setNotification({type: "error", msg: "Please log in"})
+        }
         else {
             const res = await fetch("http://localhost:8080/get-user", {
                 method: "POST",
