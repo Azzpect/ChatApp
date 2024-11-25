@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 
 
-export async function createNewUser(req: Request, res: Response, next: NextFunction) {
+export default async function createNewUser(req: Request, res: Response, next: NextFunction) {
     try {
         const {username, email, password} = req.body
 
@@ -20,12 +20,11 @@ export async function createNewUser(req: Request, res: Response, next: NextFunct
         logger.info(`User created with userId: ${userId}`)
         req.body.queryData = {status: "success", msg: "User created successfully!", useId: userId, code: 201};
     } catch (error) {
+        logger.error(`Error occurred: ${(error as Error).message}`)
         if(error instanceof UserExistError) {
-            logger.error(`Error occurred: ${(error as Error).message}`)
             req.body.queryData = {status: "error", msg: error.message, code: 400}
         }
         else {
-            logger.error(`Error occurred: ${(error as Error).message}`)
             req.body.queryData = {status: "error", msg: "error", code: 400}
         }
     }
@@ -43,5 +42,4 @@ class UserExistError extends Error {
 async function isUserAlreadyExist(username: string, email: string): Promise<boolean> {
     let user = await UserModel.findOne({username: username}) || await UserModel.findOne({email: email})
     return user != null
-
 }

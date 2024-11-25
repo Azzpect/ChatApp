@@ -42,7 +42,17 @@ export default function Form() {
                 setNotification({type: "success", msg: data.msg})
             }
             else {
-                console.log(formObj);
+                const res = await fetch("http://127.0.0.1:8080/auth-user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formObj)
+                })
+                const data = await res.json()
+                if(data.status === "error")
+                    throw new Error(data.msg)
+                setNotification({type: "success", msg: data.msg})
             }
         }
         catch(err) {
