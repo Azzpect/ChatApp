@@ -18,7 +18,7 @@ export default async function createNewUser(req: Request, res: Response, next: N
         let user = new UserModel({userId: userId, username: username, email: email, password: userPassword, profilePic: profilePic})
         await user.save()
         logger.info(`User created with userId: ${userId}`)
-        req.body.queryData = {status: "success", msg: "User created successfully!", useId: userId, code: 201};
+        req.body.queryData = {status: "success", msg: "User created successfully!", useId: userId, username: username, code: 201};
     } catch (error) {
         logger.error(`Error occurred: ${(error as Error).message}`)
         if(error instanceof UserExistError) {

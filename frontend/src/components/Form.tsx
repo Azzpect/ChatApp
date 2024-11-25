@@ -5,7 +5,8 @@ import Notification from "./Notification"
 type FetchRes = {
     status: string,
     msg: string,
-    userId ?: string
+    userId ?: string,
+    username ?: string
 }
 
 export default function Form() {
