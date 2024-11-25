@@ -16,13 +16,13 @@ export default async function authenticateUser(req: Request, res: Response, next
     try {
         const { username, password } = req.body;
 
-        const account = await UserModel.find({username: username})
-        if(account.length === 0)
+        const account = await UserModel.findOne({username: username})
+        if(account === null)
             throw new Error("Wrong credentials")
 
         const signedPassword = jwt.sign(password, (process.env.PRIVATE_KEY as string))
         
-        const user = (account[0] as object) as User
+        const user = (account as object) as User
 
         
         if(user.password === signedPassword)

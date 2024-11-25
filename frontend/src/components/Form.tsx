@@ -1,14 +1,44 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Notification from "./Notification"
 
+
+type FetchRes = {
+    status: string,
+    msg: string,
+    userId ?: string
+}
 
 export default function Form() {
 
     const [formType, changeFormType] = useState(1)
+    const [isValidUser, setValidUser] = useState(false)
     const [notification, setNotification] = useState({type: "", msg: ""})
     let validUsername: boolean = true
     let validEmail: boolean = true
     let validPassword: boolean = true
+
+
+    const authenticateUser = async () => {
+        const userId: string | undefined = localStorage.getItem("userId")?.trim()
+        if(userId === undefined || userId === "")
+            setValidUser(false)
+        else {
+            const res = await fetch("http://localhost:8080/get-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({userId: userId})
+            })
+            const data = await res.json();
+            if(data.status === "success") {
+                setValidUser(true)
+                setNotification({type: "success", msg: data.msg})
+            }
+            else
+                setNotification({type: "error", msg: data.msg})
+        }
+    }
     
     const signUp = () => {
         changeFormType(1)
@@ -28,6 +58,7 @@ export default function Form() {
             formObj[key] = value as string
         })
         try{
+            let data: FetchRes
             if(formType === 1) {
                 const res = await fetch("http://127.0.0.1:8080/create-user", {
                     method: "POST",
@@ -36,7 +67,7 @@ export default function Form() {
                     },
                     body: JSON.stringify(formObj)
                 })
-                const data = await res.json()
+                data = await res.json()
                 if(data.status === "error")
                     throw new Error(data.msg)
                 setNotification({type: "success", msg: data.msg})
@@ -49,11 +80,13 @@ export default function Form() {
                     },
                     body: JSON.stringify(formObj)
                 })
-                const data = await res.json()
+                data = await res.json()
                 if(data.status === "error")
                     throw new Error(data.msg)
                 setNotification({type: "success", msg: data.msg})
             }
+            localStorage.setItem("userId", data.userId as string)
+            setValidUser(true)
         }
         catch(err) {
             setNotification({type: "error", msg: (err as Error).message})
@@ -118,9 +151,13 @@ export default function Form() {
         
     }
     
+    useEffect(() => {
+        authenticateUser()
+    }, [])
 
     return (
         <>
+        {!isValidUser &&
         <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl">
             { formType === 2 && 
             <>
@@ -156,7 +193,7 @@ export default function Form() {
             }
             {formType === 2 && <p className="text-white">Create an account.<button className="text-white font-bold" onClick={signUp}>SignUp</button></p>}
             {formType === 1 && <p className="text-white">Already have an account?<button className="text-white font-bold" onClick={logIn}>LogIn</button></p>}
-        </form>
+        </form>}
         {notification.msg !== "" && <Notification type={notification.type} msg={notification.msg} changeState={setNotification} />}
         </>
     )
