@@ -29,7 +29,7 @@
         display: block !important;
     }
     .menu {
-        @apply hidden absolute right-2 top-14 bg-slate-800;
+        @apply hidden absolute right-2 top-14 bg-slate-800 z-10;
     }
     .menu>h3 {
         @apply text-white text-lg px-4 py-2 font-semibold cursor-pointer hover:bg-white hover:text-black;
@@ -39,7 +39,7 @@
     }
     /*menu area*/
     .profile {
-        @apply hidden bg-slate-800 flex-col items-center;
+        @apply hidden bg-slate-800 flex-col items-center pr-5;
         grid-row-start: 2;
         grid-column-start: 18;
         grid-column-end: 21;
@@ -49,10 +49,15 @@
     }
 
 
+    /*message area*/
+    .message-area {
+        grid-row-start: 2;
+        grid-column-start: 2;
+        grid-column-end: 18;
+    }
 
 
-
-
+    /*form element*/
     .auth-input-container {
         @apply mb-2;
     }
@@ -63,7 +68,7 @@
         @apply my-0 hidden text-xs font-semibold self-start pl-5;
     }
     .notification {
-        @apply py-4 text-white font-semibold rounded-md absolute top-8 -right-full cursor-pointer;
+        @apply py-4 text-white font-semibold rounded-md absolute top-8 -right-full cursor-pointer z-20;
     }
     .animate-bar {
         animation: animation-bar 3s linear forwards;

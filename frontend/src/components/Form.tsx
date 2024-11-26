@@ -1,48 +1,19 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useState, useContext } from "react"
 import { NotificationContext, UserContext } from "./contexts/AppContexts"
+import FetchRes from "../types/FetchResType"
 
-
-type FetchRes = {
-    status: string,
-    msg: string,
-    userId ?: string,
-    username ?: string,
-    profilePic ?: string
-}
 
 export default function Form() {
 
     const [formType, changeFormType] = useState(1)
-    const {user, changeUser} = useContext(UserContext)
+    const {changeUser} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
     let validUsername: boolean = true
     let validEmail: boolean = true
     let validPassword: boolean = true
 
 
-    const authenticateUser = async () => {
-        const userId: string | undefined = localStorage.getItem("userId")?.trim()
-        if(userId === undefined || userId === "") {
-            changeUser({isValidUser: false, username: "", userId: "", profilePic: ""})
-            changeNotification("error", "Please log in")
-        }
-        else {
-            const res = await fetch("http://localhost:8080/get-user", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({userId: userId})
-            })
-            const data = await res.json();
-            if(data.status === "success") {
-                changeUser({isValidUser: true, userId: userId, username: data.username, profilePic: data.profilePic})
-                changeNotification("success", data.msg)
-            }
-            else
-                changeNotification("error", data.msg)
-        }
-    }
+    
     
     const signUp = () => {
         changeFormType(1)
@@ -156,13 +127,9 @@ export default function Form() {
         
     }
     
-    useEffect(() => {
-        authenticateUser()
-    }, [])
 
     return (
         <>
-        {!user.isValidUser &&
         <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl">
             { formType === 2 && 
             <>
@@ -198,7 +165,7 @@ export default function Form() {
             }
             {formType === 2 && <p className="text-white">Create an account.<button className="text-white font-bold" onClick={signUp}>SignUp</button></p>}
             {formType === 1 && <p className="text-white">Already have an account?<button className="text-white font-bold" onClick={logIn}>LogIn</button></p>}
-        </form>}
+        </form>
         </>
     )
 }
