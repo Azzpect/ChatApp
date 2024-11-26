@@ -1,14 +1,16 @@
 import FriendList from "./components/FriendList"
 import Navbar from "./components/Navbar"
-import Form from "./components/Form"
+import NotificationContextProvider from "./components/contexts/NotificationContextProvider"
 
 export default function App() {
+
     return (
-        <>
-        <Navbar />
-        <FriendList />
-        <Form />
-        </>
+        <NotificationContextProvider>
+            <>
+            <Navbar />
+            <FriendList />
+            </>
+        </NotificationContextProvider>
     )
 }
 

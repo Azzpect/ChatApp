@@ -9,6 +9,15 @@
     .primary-heading {
         @apply text-white font-black text-3xl;
     }
+    .active-menu {
+        display: block !important;
+    }
+    .menu {
+        @apply hidden absolute right-2 top-14 bg-slate-800;
+    }
+    .menu>h3 {
+        @apply text-white text-lg px-4 py-2 font-semibold cursor-pointer hover:bg-white hover:text-black;
+    }
     .auth-input-container {
         @apply mb-2;
     }

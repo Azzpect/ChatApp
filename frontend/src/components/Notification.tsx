@@ -1,19 +1,12 @@
-import { useEffect } from "react";
-
-type NotificationType = {
-    type: string,
-    msg: string,
-    changeState: React.Dispatch<React.SetStateAction<{
-        type: string;
-        msg: string;
-    }>>
-}
+import { useContext, useEffect } from "react";
+import { NotificationContext } from "./contexts/AppContexts";
 
 
 
-export default function Notification({type, msg, changeState}: NotificationType) {
 
+export default function Notification() {
 
+    const {notification, changeNotification} = useContext(NotificationContext)
     
     useEffect(() => {
         document.querySelector("#bar")?.addEventListener("animationend", (e) => {
@@ -27,7 +20,7 @@ export default function Notification({type, msg, changeState}: NotificationType)
         document.querySelector("#notification")?.addEventListener("animationend", (e) => {
             const element = e.target as HTMLElement
             if(element.classList.contains("animate-slide-out")) {
-                changeState({type: "", msg: ""})
+                changeNotification("", "")
             }
         })
         document.querySelector("#notification")?.addEventListener("click", () => {
@@ -38,9 +31,9 @@ export default function Notification({type, msg, changeState}: NotificationType)
     })
 
     return (
-        <div id="notification" className={`notification ${type === 'success' ? 'bg-green-400' : 'bg-red-400'} animate-slide-in`}>
-            <p className="px-3">{msg}</p>
-            <div id="bar" className={`${type === 'success'? 'bg-green-700' : 'bg-red-700'} w-full h-2 absolute bottom-0 animate-bar`}></div>
+        <div id="notification" className={`notification ${notification.type === 'success' ? 'bg-green-400' : 'bg-red-400'} animate-slide-in`}>
+            <p className="px-3">{notification.msg}</p>
+            <div id="bar" className={`${notification.type === 'success'? 'bg-green-700' : 'bg-red-700'} w-full h-2 absolute bottom-0 animate-bar`}></div>
         </div>
     )
 }
