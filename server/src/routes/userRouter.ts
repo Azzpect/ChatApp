@@ -15,7 +15,7 @@ export const userRouter = Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../../public/profilePics"))
+        cb(null, path.join(__dirname, "../../public/"))
     },
     filename: (req, file, cb) => {
         if(req.body.profileType === "url")
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
         const fileName = req.body.username + path.extname(file.originalname)
         if(existsSync(fileName))
             unlinkSync(fileName)
-        req.body.profilePic = `http://localhost:8080/public/profilePics/${fileName}`
+        req.body.profilePic = `http://localhost:8080/public/${fileName}`
         cb(null, fileName)
     }
 })
