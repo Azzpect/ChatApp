@@ -6,13 +6,14 @@ type FetchRes = {
     status: string,
     msg: string,
     userId ?: string,
-    username ?: string
+    username ?: string,
+    profilePic ?: string
 }
 
 export default function Form() {
 
     const [formType, changeFormType] = useState(1)
-    const {isValidUser, changeValidUser} = useContext(UserContext)
+    const {user, changeUser} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
     let validUsername: boolean = true
     let validEmail: boolean = true
@@ -22,7 +23,7 @@ export default function Form() {
     const authenticateUser = async () => {
         const userId: string | undefined = localStorage.getItem("userId")?.trim()
         if(userId === undefined || userId === "") {
-            changeValidUser(false)
+            changeUser({isValidUser: false, username: "", userId: "", profilePic: ""})
             changeNotification("error", "Please log in")
         }
         else {
@@ -35,7 +36,7 @@ export default function Form() {
             })
             const data = await res.json();
             if(data.status === "success") {
-                changeValidUser(true)
+                changeUser({isValidUser: true, userId: userId, username: data.username, profilePic: data.profilePic})
                 changeNotification("success", data.msg)
             }
             else
@@ -89,7 +90,8 @@ export default function Form() {
                 changeNotification("success", data.msg)
             }
             localStorage.setItem("userId", data.userId as string)
-            changeValidUser(true)
+            changeUser({isValidUser: true, userId: data.userId as string, username: data.username as string, profilePic: data.profilePic as string})
+
         }
         catch(err) {
             changeNotification("error", (err as Error).message)
@@ -160,7 +162,7 @@ export default function Form() {
 
     return (
         <>
-        {!isValidUser &&
+        {!user.isValidUser &&
         <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl">
             { formType === 2 && 
             <>

@@ -8,6 +8,7 @@
         grid-template-rows: 10vh 1fr;
         grid-template-columns: repeat(20, minmax(0, 1fr));
     }
+    /*navbar style*/
     .primary-heading {
         @apply text-white font-black text-3xl;
     }
@@ -33,6 +34,25 @@
     .menu>h3 {
         @apply text-white text-lg px-4 py-2 font-semibold cursor-pointer hover:bg-white hover:text-black;
     }
+    .profile-container {
+        @apply flex items-center cursor-pointer;
+    }
+    /*menu area*/
+    .profile {
+        @apply hidden bg-slate-800 flex-col items-center;
+        grid-row-start: 2;
+        grid-column-start: 18;
+        grid-column-end: 21;
+    }
+    .active-profile {
+        display: flex !important;
+    }
+
+
+
+
+
+
     .auth-input-container {
         @apply mb-2;
     }
@@ -82,14 +102,5 @@
 
 
 
-    /*menu area*/
-    .profile {
-        @apply hidden bg-slate-800;
-        grid-row-start: 2;
-        grid-column-start: 18;
-        grid-column-end: 21;
-    }
-    .active-profile {
-        display: block !important;
-    }
+    
 }

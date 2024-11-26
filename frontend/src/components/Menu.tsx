@@ -4,7 +4,7 @@ import { NotificationContext, UserContext } from "./contexts/AppContexts"
 
 export default function Menu() {
 
-    const {changeValidUser} = useContext(UserContext)
+    const {changeUser} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
 
     return(
@@ -18,7 +18,7 @@ export default function Menu() {
                 document.querySelector(".menu")?.classList.remove("active-menu")
                 document.querySelector(".profile")?.classList.remove("active-profile")
                 localStorage.removeItem("userId")
-                changeValidUser(false)
+                changeUser({isValidUser: false, userId: "", username: "", profilePic: ""})
                 changeNotification("success", "Logged out from the account")
             }}>LogOut</h3>
         </div>

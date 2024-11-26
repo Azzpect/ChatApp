@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { UserContext } from "./AppContexts";
 import { ProviderPropType } from "./AppContexts";
-
+import { User } from "./AppContexts";
 
 
 
 export default function UserContextProvider({children}: ProviderPropType) {
-    const [isValidUser, setValidUser] = useState(false)
+    const [user, setUser] = useState({isValidUser: false, username: "", userId: "", profilePic: ""})
 
-    const changeValidUser = (value: boolean) => {setValidUser(value)}
+    const changeUser = (value: User) => {setUser(value)}
 
     return(
-        <UserContext.Provider value={{isValidUser, changeValidUser}}>
+        <UserContext.Provider value={{user, changeUser}}>
             {children}
         </UserContext.Provider>
     )

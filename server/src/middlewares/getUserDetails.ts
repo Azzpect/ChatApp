@@ -13,7 +13,7 @@ export default async function getUserDetails(req: Request, res: Response, next: 
         if(user === null)
             throw new Error("Wrong userid. Please log in again.")
 
-        req.body.queryData = {status: "success", msg: `Logged in as ${user.username}`, username: user.username, code: 200}
+        req.body.queryData = {status: "success", msg: `Logged in as ${user.username}`, username: user.username, profilePic: user.profilePic, code: 200}
     }
     catch(err) {
         logger.error(`Error occurred: ${(err as Error).message}`)
