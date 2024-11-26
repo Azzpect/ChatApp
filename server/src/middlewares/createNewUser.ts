@@ -8,7 +8,7 @@ export default async function createNewUser(req: Request, res: Response, next: N
     try {
         const {username, email, password} = req.body
 
-        let profilePic = "http://localhost:8080/profilepics/default.svg"
+        let profilePic = "http://localhost:8080/public/profilepics/userIcon.svg"
 
         if(await isUserAlreadyExist(username, email))
             throw new UserExistError()

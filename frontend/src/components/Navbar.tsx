@@ -12,12 +12,12 @@ export default function Navbar() {
     const {notification} = useContext(NotificationContext)
 
     function toggleMenu() {
-        document.querySelector("#menu")?.classList.toggle("active-menu")
+        document.querySelector(".menu")?.classList.toggle("active-menu")
     }
 
     return (
         <>
-            <nav className="bg-slate-800 p-4 flex justify-between">
+            <nav className="navbar">
                 <h1 className="primary-heading">ChatAPP</h1>
                 <img onClick={toggleMenu} src="http://localhost:8080/public/profilepics/userIcon.svg" alt="" className="w-8 cursor-pointer"/>
                 <UserContextProvider>

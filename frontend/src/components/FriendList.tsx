@@ -13,7 +13,7 @@ export default function FriendList() {
         {icon: userIcon, name: "satyamurthi"}
     ]
     return (
-        <div className="bg-slate-800 h-screen w-16 flex flex-col items-center">
+        <div className="friends-bar">
             {
                friendList.map((friend) => {
                 return <FriendCard key={friend.name} icon={friend.icon} name={friend.name} />

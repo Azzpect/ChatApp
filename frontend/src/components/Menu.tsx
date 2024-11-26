@@ -8,11 +8,15 @@ export default function Menu() {
     const {changeNotification} = useContext(NotificationContext)
 
     return(
-        <div id="menu" className="menu">
-            <h3>Profile</h3>
+        <div className="menu">
+            <h3 onClick={() => {
+                document.querySelector(".profile")?.classList.toggle("active-profile")
+                document.querySelector(".menu")?.classList.remove("active-menu")
+            }}>Profile</h3>
             <h3>Friends</h3>
             <h3 onClick={() => {
-                document.querySelector("#menu")?.classList.remove("active-menu")
+                document.querySelector(".menu")?.classList.remove("active-menu")
+                document.querySelector(".profile")?.classList.remove("active-profile")
                 localStorage.removeItem("userId")
                 changeValidUser(false)
                 changeNotification("success", "Logged out from the account")

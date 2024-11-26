@@ -3,11 +3,26 @@
 @tailwind utilities;
 
 @layer components {
-    /* body {
-        overflow-x: hidden;
-    } */
+    .app {
+        display: grid;
+        grid-template-rows: 10vh 1fr;
+        grid-template-columns: repeat(20, minmax(0, 1fr));
+    }
     .primary-heading {
         @apply text-white font-black text-3xl;
+    }
+    .navbar {
+        @apply bg-slate-800 p-4 flex justify-between;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 21;
+    }
+    .friends-bar {
+        @apply bg-slate-800 h-screen flex flex-col items-center;
+        grid-row-start: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
     }
     .active-menu {
         display: block !important;
@@ -63,5 +78,18 @@
         to {
             right: -100%;
         }
+    }
+
+
+
+    /*menu area*/
+    .profile {
+        @apply hidden bg-slate-800;
+        grid-row-start: 2;
+        grid-column-start: 18;
+        grid-column-end: 21;
+    }
+    .active-profile {
+        display: block !important;
     }
 }
