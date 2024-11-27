@@ -1,11 +1,7 @@
-import { useContext } from "react"
-import { NotificationContext, UserContext } from "./contexts/AppContexts"
+
 
 
 export default function Menu() {
-
-    const {changeUser} = useContext(UserContext)
-    const {changeNotification} = useContext(NotificationContext)
 
     return(
         <div className="menu">
@@ -24,8 +20,7 @@ export default function Menu() {
                 document.querySelector(".profile")?.classList.remove("active-profile")
                 document.querySelector(".friends-section")?.classList.remove("active-friends-section")
                 localStorage.removeItem("userId")
-                changeUser({isValidUser: false, userId: "", username: "", profilePic: ""})
-                changeNotification("success", "Logged out from the account")
+                window.location.reload()
             }}>LogOut</h3>
         </div>
     )
