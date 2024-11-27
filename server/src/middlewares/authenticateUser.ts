@@ -26,7 +26,7 @@ export default async function authenticateUser(req: Request, res: Response, next
 
         
         if(user.password === signedPassword)
-            req.body.queryResult = {status: "success", msg: `Logged in as ${username}`, userId: user.userId, username: username, profilePic: user.profilePic, code: 200}
+            req.body.queryResult = {status: "success", msg: `Logged in as ${username}`, userId: user.userId, code: 200}
         else
             throw new Error("Wrong credentials")
     }

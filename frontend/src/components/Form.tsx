@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { NotificationContext, UserContext } from "./contexts/AppContexts"
-import FetchRes from "../types/FetchResType"
 
 
 export default function Form() {
@@ -12,7 +11,30 @@ export default function Form() {
     let validEmail: boolean = true
     let validPassword: boolean = true
 
+    const authenticateUser = async () => {
+        const userId: string | undefined = localStorage.getItem("userId")?.trim()
+        if(userId === undefined || userId === "") {
+            changeUser({isValidUser: false, username: "", userId: "", profilePic: ""})
+            changeNotification("error", "Please log in")
+        }
+        else {
+            const res = await fetch(`http://localhost:8080/get-user?userId=${encodeURIComponent(userId)}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const data = await res.json();
+            if(data.status === "success") {
+                changeUser({isValidUser: true, userId: userId, username: data.username, profilePic: data.profilePic})
+                changeNotification("success", data.msg)
+            }
+            else
+                changeNotification("error", data.msg)
+        }
+    }
 
+    
     
     
     const signUp = () => {
@@ -33,7 +55,7 @@ export default function Form() {
             formObj[key] = value as string
         })
         try{
-            let data: FetchRes
+            let data = {status: "", msg: "", userId: ""}
             if(formType === 1) {
                 const res = await fetch("http://127.0.0.1:8080/create-user", {
                     method: "POST",
@@ -61,8 +83,7 @@ export default function Form() {
                 changeNotification("success", data.msg)
             }
             localStorage.setItem("userId", data.userId as string)
-            changeUser({isValidUser: true, userId: data.userId as string, username: data.username as string, profilePic: data.profilePic as string})
-
+            authenticateUser()
         }
         catch(err) {
             changeNotification("error", (err as Error).message)
@@ -127,6 +148,9 @@ export default function Form() {
         
     }
     
+    useEffect(() => {
+        authenticateUser()
+    }, [])
 
     return (
         <>
