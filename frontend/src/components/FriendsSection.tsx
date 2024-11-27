@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import searchIcon from "../assets/search.svg";
 import addFriend from "../assets/addFriend.svg";
+import requestPending from "../assets/requestPending.svg";
 import { NotificationContext, UserContext } from "./contexts/AppContexts";
 
 
@@ -46,7 +47,7 @@ function AddFriend() {
             const name = (document.querySelector(".add-friend-section>.search-element>input") as HTMLInputElement).value.trim();
             if(name === "")
                 throw new Error("Please enter a name to search for")
-            const response = await fetch(`http://localhost:8080/get-people-list?name=${encodeURIComponent(name)}`);
+            const response = await fetch(`http://localhost:8080/get-people-list?name=${encodeURIComponent(name)}&userId=${encodeURIComponent(user.userId)}`);
             const data = await response.json();
             setPeopleList(data.data)
         }
@@ -62,8 +63,8 @@ function AddFriend() {
                 <img onClick={findPeople} src={searchIcon} alt="" />
             </div>
             <div className="search-results">
-                {peopleList.filter(person => person.userId !== user.userId).map((person, index) => (
-                    <FriendCard key={index} userId={person.userId} profilePic={person.profilePic} username={person.username} />
+                {peopleList.map((person, index) => (
+                    <FriendCard key={index} userId={person.userId} profilePic={person.profilePic} username={person.username} requestStatus={person.requestStatus} />
                 ))}
             </div>
         </div>
@@ -84,15 +85,39 @@ function AllFriends() {
 interface FriendCardProps {
     userId: string,
     profilePic: string,
-    username: string
+    username: string,
+    requestStatus: string
 }
 
-function FriendCard({userId, profilePic, username}: FriendCardProps) {
+function FriendCard({userId, profilePic, username, requestStatus}: FriendCardProps) {
+
+    const {user} = useContext(UserContext)
+    const {changeNotification} = useContext(NotificationContext)
+
+    async function sendFriendRequest(e: React.SyntheticEvent<HTMLImageElement>) {
+        const receiverId = (e.target as HTMLImageElement).parentElement?.getAttribute("data-user-id") as string
+        const res = await fetch("http://localhost:8080/add-friend", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: user.userId,
+                friendId: receiverId
+            })
+        })
+        const data = await res.json()
+        changeNotification(data.status, data.msg)
+        if(data.status === "success")
+            (e.target as HTMLImageElement).src = requestPending
+    }
+
     return (
-        <div key={userId} className="friend-card">
+        <div data-user-id={userId} className="friend-card">
             <img src={profilePic} alt="" />
             <h3>{username}</h3>
-            <img src={addFriend} alt="" />
+            {requestStatus === "declined" && <img src={addFriend} onClick={sendFriendRequest} alt="" />}
+            {requestStatus === "pending" && <img src={requestPending} alt="" />}
         </div>
     )
 }

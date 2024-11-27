@@ -4,7 +4,7 @@ import { model, Schema } from "mongoose";
 const FriendRequestSchema = new Schema({
     from: String,
     to: String,
-    status: {enum: ["pending", "accepted", "declined"], default: "pending"},
+    status: {type: String, enum: ["pending", "accepted", "declined"], default: "pending"},
     createdAt: {type: Date, default: Date.now}
 })
 

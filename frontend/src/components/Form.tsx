@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import { NotificationContext, UserContext } from "./contexts/AppContexts"
+import { connectSocket } from "./SocketConnection"
 
 
 export default function Form() {
@@ -28,6 +29,7 @@ export default function Form() {
             if(data.status === "success") {
                 changeUser({isValidUser: true, userId: userId, username: data.username, profilePic: data.profilePic})
                 changeNotification("success", data.msg)
+                connectSocket()
             }
             else
                 changeNotification("error", data.msg)
