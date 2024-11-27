@@ -9,7 +9,7 @@ export default async function getPeopleList(req: Request, res: Response, next: N
     try {
         const {name, userId} = req.query;
         const regex = new RegExp(`^${name}`);
-        const allPeople = await UserModel.find({"username": {$regex: regex}}).select("-_id username userId profilePic")
+        const allPeople = await UserModel.find({"username": {$regex: regex}}).select("-_id -password -__v -createdAt -email")
         const allRequests = await FriendRequestModel.find({from: userId})
         let rawPeople = allPeople.filter(person => person.userId !== userId).map(person => {
             return {userId: person.userId, username: person.username, profilePic: person.profilePic, requestStatus: "declined"}

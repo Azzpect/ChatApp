@@ -1,22 +1,39 @@
-import userIcon from "../assets/userIcon.svg"
 import triangle from "../assets/triangle.svg"
+import { UserContext, NotificationContext } from "./contexts/AppContexts"
+import { useContext, useEffect, useState } from "react"
 
 interface FriendCardProps {
-    icon: string,
-    name: string
+    profilePic: string,
+    username: string,
+    userId: string
 }
 
 export default function FriendList() {
-    const friendList: FriendCardProps[] = [
-        {icon: userIcon, name: "atanu"},
-        {icon: userIcon, name: "santanu"},
-        {icon: userIcon, name: "satyamurthi"}
-    ]
+    const [friendList, setFriendList] = useState<FriendCardProps[]>([{profilePic: "", username: "John Doe", userId: "12345"}])
+
+    const {user} = useContext(UserContext)
+    const {changeNotification} = useContext(NotificationContext)
+
+    async function getFriends() {
+        const res = await fetch(`http://localhost:8080/get-friends?userId=${encodeURIComponent(user.userId)}`)
+        const data = await res.json()
+        if(data.status === "success" && data.friends.length > 0) {
+            setFriendList(data.friends)
+        }
+        else {
+            changeNotification(data.status, data.msg)
+        }
+    }
+
+    useEffect(() => {
+        getFriends()
+    }, [user])
+
     return (
         <div className="friends-bar">
             {
-               friendList.map((friend) => {
-                return <FriendCard key={friend.name} icon={friend.icon} name={friend.name} />
+               friendList.map((friend, index) => {
+                return <FriendCard key={index} profilePic={friend.profilePic} username={friend.username} userId={friend.userId} />
                })
             }
         </div>
@@ -24,13 +41,13 @@ export default function FriendList() {
 }
 
 
-function FriendCard({icon, name}: FriendCardProps) {
+function FriendCard({profilePic, username, userId}: FriendCardProps) {
     return (
-        <div className="group relative w-full overflow-x-visible">
-            <img src={icon} alt="" className="w-10 my-2 mx-auto cursor-pointer"/>
+        <div data-user-id={userId} className="group relative w-full overflow-x-visible">
+            <img src={profilePic} alt="" className="w-10 my-2 rounded-full mx-auto cursor-pointer"/>
             <div className="absolute hidden group-hover:block left-[120%] top-1/2 -translate-y-1/2 bg-slate-900 p-2 whitespace-nowrap">
                 <img className="absolute right-full w-4 rotate-90" src={triangle} alt="" />
-                <h3 className="text-white">{name}</h3>
+                <h3 className="text-white">{username}</h3>
             </div>
         </div>
     )
