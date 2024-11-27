@@ -1,4 +1,4 @@
-import { UserModel } from "../models/userModel";
+import { UserModel } from "../models/UserModel";
 import { logger } from "../logger";
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
