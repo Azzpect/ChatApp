@@ -16,12 +16,12 @@ export default async function updateUser(req: Request, res: Response, next: Next
 
         await UserModel.updateOne({userId: userId}, {$set: {username: username, profilePic: profilePic}})
 
-        req.body.queryData = {status: "success", msg: "Profile updated successfully", code: 200}
-
+        req.body.queryResult = {status: "success", msg: "Profile updated successfully", code: 200}
+        logger.info(`Success: Profile updated successfully for user ${userId}`)
 
     } catch (err) {
         logger.error(`Error: ${(err as Error).message}`)
-        req.body.queryData = {status: "success", msg: (err as Error).message, code: 401}
+        req.body.queryResult = {status: "success", msg: (err as Error).message, code: 401}
     }
     finally {
         next()

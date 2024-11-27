@@ -8,7 +8,7 @@ export default async function createNewUser(req: Request, res: Response, next: N
     try {
         const {username, email, password} = req.body
 
-        let profilePic = "http://localhost:8080/public/profilepics/userIcon.svg"
+        let profilePic = "http://localhost:8080/public/userIcon.svg"
 
         if(await isUserAlreadyExist(username, email))
             throw new UserExistError()
@@ -18,14 +18,14 @@ export default async function createNewUser(req: Request, res: Response, next: N
         let user = new UserModel({userId: userId, username: username, email: email, password: userPassword, profilePic: profilePic})
         await user.save()
         logger.info(`User created with userId: ${userId}`)
-        req.body.queryData = {status: "success", msg: "User created successfully!", userId: userId, username: username, profilePic: profilePic, code: 201};
+        req.body.queryResult = {status: "success", msg: "User created successfully!", userId: userId, username: username, profilePic: profilePic, code: 201};
     } catch (error) {
         logger.error(`Error occurred: ${(error as Error).message}`)
         if(error instanceof UserExistError) {
-            req.body.queryData = {status: "error", msg: error.message, code: 400}
+            req.body.queryResult = {status: "error", msg: error.message, code: 400}
         }
         else {
-            req.body.queryData = {status: "error", msg: "error", code: 400}
+            req.body.queryResult = {status: "error", msg: "error", code: 400}
         }
     }
     finally {

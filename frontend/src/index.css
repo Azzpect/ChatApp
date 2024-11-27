@@ -47,6 +47,51 @@
     .active-profile {
         display: flex !important;
     }
+    .friends-section {
+        @apply hidden bg-slate-800 flex-col items-center;
+        grid-row-start: 2;
+        grid-column-start: 18;
+        grid-column-end: 21;
+    }
+    .active-friends-section {
+        display: flex !important;
+    }
+    .friends-section>.btn-container {
+        @apply w-full flex justify-around items-center;
+    }
+    .btn-container>button {
+        @apply text-xs text-white font-semibold bg-transparent p-1 text-center;
+    }
+    .friends-section-sub-element {
+        @apply bg-slate-500 w-full h-full;
+    }
+    .active-friends-btn {
+        @apply bg-slate-500 !important;
+    }
+
+    .add-friend-section>.search-element {
+        @apply w-full flex justify-around items-center mt-3;
+    }
+    .add-friend-section>.search-element>input {
+        @apply w-3/4 bg-transparent border-solid border-white border-2 rounded-lg outline-none text-white text-sm pl-2;
+    }
+    .add-friend-section>.search-element>img {
+        @apply w-5 cursor-pointer;
+    }
+
+    .friend-card {
+        @apply flex justify-around items-center my-2;
+    }
+    .friend-card>img:nth-child(1) {
+        @apply w-12 h-12 rounded-full;
+    }
+    .friend-card>img:nth-child(3) {
+        @apply w-4 h-4 cursor-pointer;
+    }
+    .friend-card>h3 {
+        @apply text-white text-lg font-semibold w-1/2;
+    }
+    
 
 
     /*message area*/

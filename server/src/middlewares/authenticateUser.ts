@@ -26,13 +26,13 @@ export default async function authenticateUser(req: Request, res: Response, next
 
         
         if(user.password === signedPassword)
-            req.body.queryData = {status: "success", msg: `Logged in as ${username}`, userId: user.userId, username: username, profilePic: user.profilePic, code: 200}
+            req.body.queryResult = {status: "success", msg: `Logged in as ${username}`, userId: user.userId, username: username, profilePic: user.profilePic, code: 200}
         else
             throw new Error("Wrong credentials")
     }
     catch(err) {
         logger.error(`Error occurred: ${(err as Error).message}`)
-        req.body.queryData = {status: "error", msg: (err as Error).message, code: 401}
+        req.body.queryResult = {status: "error", msg: (err as Error).message, code: 401}
     }
     finally {
         next()

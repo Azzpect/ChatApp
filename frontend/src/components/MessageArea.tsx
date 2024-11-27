@@ -13,12 +13,11 @@ export default function MessageArea() {
             changeNotification("error", "Please log in")
         }
         else {
-            const res = await fetch("http://localhost:8080/get-user", {
-                method: "POST",
+            const res = await fetch(`http://localhost:8080/get-user?userId=${encodeURIComponent(userId)}`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({userId: userId})
+                }
             })
             const data = await res.json();
             if(data.status === "success") {

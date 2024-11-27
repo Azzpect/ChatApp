@@ -1,5 +1,5 @@
 
-import e, { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 import createNewUser from "../middlewares/createNewUser";
 import authenticateUser from "../middlewares/authenticateUser";
 import getUserDetails from "../middlewares/getUserDetails";
@@ -7,8 +7,6 @@ import updateUser from "../middlewares/updateUser";
 import multer from "multer";
 import path from "path";
 import { unlinkSync, existsSync } from "fs";
-
-
 
 
 export const userRouter = Router();
@@ -31,29 +29,29 @@ const upload = multer({storage: storage})
 
 
 userRouter.post("/create-user", createNewUser, (req: Request, res: Response) => {
-    const {queryData} = req.body
-    res.status(queryData.code)
-    delete queryData.code
-    res.json({...queryData})
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.json({...queryResult})
 })
 
 userRouter.post("/auth-user", authenticateUser, (req: Request, res: Response) => {
-    const {queryData} = req.body
-    res.status(queryData.code)
-    delete queryData.code
-    res.json({...queryData})
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.json({...queryResult})
 })
 
-userRouter.post("/get-user", getUserDetails, (req: Request, res: Response) => {
-    const {queryData} = req.body
-    res.status(queryData.code)
-    delete queryData.code
-    res.json({...queryData})
+userRouter.get("/get-user", getUserDetails, (req: Request, res: Response) => {
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.json({...queryResult})
 })
 
 userRouter.post("/update-user", upload.single("profilePic"), updateUser, (req: Request, res: Response) => {
-    const {queryData} = req.body
-    res.status(queryData.code)
-    delete queryData.code
-    res.json({...queryData})
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.json({...queryResult})
 })

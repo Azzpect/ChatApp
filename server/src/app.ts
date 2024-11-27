@@ -3,6 +3,7 @@ import { connectToDB } from "./db";
 import { userRouter } from "./routes/userRouter";
 import cors from "cors";
 import path from "path";
+import { friendsRouter } from "./routes/friendsRouter";
 
 const app: Express = express();
 const port: string | unknown = process.env.PORT
@@ -23,6 +24,7 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 app.use(userRouter)
+app.use(friendsRouter)
 
 
 
