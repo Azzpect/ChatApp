@@ -28,7 +28,7 @@ export default async function getPeopleList(req: Request, res: Response, next: N
             })
             if(flag)
                 return person
-        })
+        }).filter(person => person !== undefined)
         req.body.queryResult = {status: "success", data: people, code: 200}
     } catch (err) {
         req.body.queryResult = {status: "error", message: (err as Error).message, code: 500}
