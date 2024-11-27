@@ -4,8 +4,12 @@ import { userRouter } from "./routes/userRouter";
 import cors from "cors";
 import path from "path";
 import { friendsRouter } from "./routes/friendsRouter";
+import { Server } from "socket.io";
+import { createServer } from "http";
 
 const app: Express = express();
+const server = createServer(app);
+const io = new Server(server)
 const port: string | unknown = process.env.PORT
 const corsOptions = {
     origin: ['http://localhost:5173'],
@@ -26,8 +30,20 @@ app.get("/", (req: Request, res: Response) => {
 app.use(userRouter)
 app.use(friendsRouter)
 
+//websocket connection
+io.on("connection", (socket) => {
+    console.log("a user connected");
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+    socket.on("message", (msg) => {
+        console.log("Message sent by client: " + msg);
+        socket.emit("message", "Server: " + msg);
+    })
+});
 
 
-app.listen(port, () => {
+
+server.listen(port, () => {
     console.log("server started");
 })
