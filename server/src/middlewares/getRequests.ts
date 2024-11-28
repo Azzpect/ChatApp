@@ -10,7 +10,7 @@ export default async function getRequests(req: Request, res: Response, next: Nex
 
         const requestData = await Promise.all(requests.map(async (request) => {
             const user = await UserModel.findOne({userId: request.from}).lean().select("userId username profilePic");
-            return {...user, _id: request._id}
+            return {...user, requestId: request._id}
         }));
         
         req.body.queryResult = {status: "success", requests: requestData, code: 200}

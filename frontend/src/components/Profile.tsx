@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { NotificationContext, UserContext } from "./contexts/AppContexts"
 import edit from "../assets/edit.svg"
-import FetchResType from "../types/FetchResType"
 
 
 export default function Profile() {
@@ -29,7 +28,7 @@ export default function Profile() {
                 method: "POST",
                 body: formData
             })
-            const data: FetchResType = await res.json()
+            const data = await res.json()
             changeNotification("success", data.msg)
             changeUser(tempUser)
         }

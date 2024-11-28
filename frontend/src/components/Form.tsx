@@ -28,11 +28,9 @@ export default function Form() {
             const data = await res.json();
             if(data.status === "success") {
                 changeUser({isValidUser: true, userId: userId, ...data.user})
-                changeNotification("success", data.msg)
                 connectSocket()
             }
-            else
-                changeNotification("error", data.msg)
+            changeNotification(data.status, data.msg)
         }
     }
 

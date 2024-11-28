@@ -22,7 +22,7 @@ export default function FriendList() {
         if(data.status === "success" && data.friends.length > 0) {
             setFriendList(data.friends)
         }
-        else {
+        else if(data.status === "error") {
             changeNotification(data.status, data.msg)
         }
     }
