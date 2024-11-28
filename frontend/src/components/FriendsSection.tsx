@@ -49,7 +49,7 @@ function AddFriend() {
                 throw new Error("Please enter a name to search for")
             const response = await fetch(`http://localhost:8080/get-people-list?name=${encodeURIComponent(name)}&userId=${encodeURIComponent(user.userId)}`);
             const data = await response.json();
-            setPeopleList(data.data)
+            setPeopleList(data.peopleList)
         }
         catch(err) {
             changeNotification("error", (err as Error).message)
@@ -64,7 +64,7 @@ function AddFriend() {
             </div>
             <div className="search-results">
                 {peopleList.map((person, index) => (
-                    <FriendCard key={index} userId={person.userId} profilePic={person.profilePic} username={person.username} requestStatus={person.requestStatus} />
+                    <FriendCard key={index} userId={person.userId} profilePic={person.profilePic} username={person.username} status={person.status} />
                 ))}
             </div>
         </div>
@@ -79,7 +79,6 @@ function Requests() {
     async function getPendingRequests() {
         const res = await fetch(`http://localhost:8080/get-requests?userId=${encodeURIComponent(user.userId)}`)
         const data = await res.json()
-        console.log(data);
         if(data.status === "success")
             if(data.requests === undefined)
                 console.log("No pending requests")
@@ -171,10 +170,10 @@ interface FriendCardProps {
     userId: string,
     profilePic: string,
     username: string,
-    requestStatus: string
+    status: string
 }
 
-function FriendCard({userId, profilePic, username, requestStatus}: FriendCardProps) {
+function FriendCard({userId, profilePic, username, status}: FriendCardProps) {
 
     const {user} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
@@ -201,8 +200,8 @@ function FriendCard({userId, profilePic, username, requestStatus}: FriendCardPro
         <div data-user-id={userId} className="friend-card">
             <img src={profilePic} alt="" />
             <h3>{username}</h3>
-            {requestStatus === "declined" && <img src={addFriend} onClick={sendFriendRequest} alt="" />}
-            {requestStatus === "pending" && <img src={requestPending} alt="" />}
+            {status === "declined" && <img src={addFriend} onClick={sendFriendRequest} alt="" />}
+            {status === "pending" && <img src={requestPending} alt="" />}
         </div>
     )
 }

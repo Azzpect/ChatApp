@@ -19,10 +19,10 @@ export default async function getAllFriends(req: Request, res: Response, next: N
         }).select("-status")
         const friends = await Promise.all(friendRequests.map(async (request) => {
             if(request.from === userId) {
-                return await UserModel.findOne({userId: request.to}).select("-_id -password -__v -createdAt -email")
+                return await UserModel.findOne({userId: request.to}).select("username userId profilePic")
             }
             else {
-                return await UserModel.findOne({userId: request.from}).select("-_id -password -__v -createdAt -email")
+                return await UserModel.findOne({userId: request.from}).select("username userId profilePic")
             }
         }))
         req.body.queryResult = {status: "success", friends: friends, code: 200}

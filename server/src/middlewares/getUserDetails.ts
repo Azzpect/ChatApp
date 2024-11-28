@@ -8,12 +8,12 @@ export default async function getUserDetails(req: Request, res: Response, next: 
     try {
         const {userId} = req.query;
 
-        const user = await UserModel.findOne({userId: userId})
+        const user = await UserModel.findOne({userId: userId}).lean().select("username profilePic")
 
         if(user === null)
             throw new Error("Wrong userid. Please log in again.")
 
-        req.body.queryResult = {status: "success", msg: `Logged in as ${user.username}`, username: user.username, profilePic: user.profilePic, code: 200}
+        req.body.queryResult = {status: "success", msg: `Logged in as ${user.username}`, user: {...user}, code: 200}
     }
     catch(err) {
         logger.error(`Error occurred: ${(err as Error).message}`)
