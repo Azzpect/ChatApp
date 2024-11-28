@@ -91,6 +91,25 @@
     .friend-card>h3 {
         @apply text-white text-lg font-semibold w-1/2;
     }
+
+    .request-card {
+        @apply flex flex-col justify-around items-center my-2;
+    }
+    .request-card>.details {
+        @apply w-full flex justify-around items-center;
+    }
+    .request-card>.details>img {
+        @apply w-12 h-12 rounded-full;
+    }
+    .request-card>.details>h3 {
+        @apply text-white text-lg font-semibold w-1/2;
+    }
+    .request-card>.request-btn-container {
+        @apply w-full flex justify-around items-center mt-2;
+    }
+    .request-card>.request-btn-container>button {
+        @apply bg-white rounded-lg p-2 cursor-pointer;
+    }
     
 
 

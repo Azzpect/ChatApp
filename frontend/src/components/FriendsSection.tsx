@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import searchIcon from "../assets/search.svg";
 import addFriend from "../assets/addFriend.svg";
 import requestPending from "../assets/requestPending.svg";
@@ -71,10 +71,59 @@ function AddFriend() {
     )
 }
 function Requests() {
+
+    const {user} = useContext(UserContext)
+    const {changeNotification} = useContext(NotificationContext)
+    const [requests, setRequests]  = useState<RequestCardProps[]>([])
+
+    async function getPendingRequests() {
+        const res = await fetch(`http://localhost:8080/get-requests?userId=${user.userId}`)
+        const data = await res.json()
+        console.log(data);
+        if(data.status === "success")
+            if(data.requests === undefined)
+                console.log("No pending requests")
+            else
+                setRequests(data.requests)
+        else
+            changeNotification("error", data.msg)
+    }
+
+    useEffect(() => {
+        getPendingRequests()
+    }, [user])
+
     return (
-        <div className="requests-section friends-section-sub-element"></div>
+        <div className="requests-section friends-section-sub-element">
+            {requests.map((request, index) => {
+                return <RequestCard key={index} requestId={request.requestId} profilePic={request.profilePic} username={request.username} />
+            })}
+        </div>
     )
 }
+
+interface RequestCardProps {
+    requestId: string,
+    profilePic: string,
+    username: string
+}
+
+function RequestCard({requestId, profilePic, username}: RequestCardProps) {
+    return (
+        <div data-request-id={requestId} className="request-card">
+            <div className="details">
+                <img src={profilePic} alt="" />
+                <h3>{username}</h3>
+            </div>
+            <div className="request-btn-container">
+                <button>Accept</button>
+                <button>Decline</button>
+            </div>
+        </div>
+    )
+}
+
+
 function AllFriends() {
     return (
         <div className="all-friends-section friends-section-sub-element"></div>

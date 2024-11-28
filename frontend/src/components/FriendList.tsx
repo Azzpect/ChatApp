@@ -17,6 +17,8 @@ export default function FriendList() {
     async function getFriends() {
         const res = await fetch(`http://localhost:8080/get-friends?userId=${encodeURIComponent(user.userId)}`)
         const data = await res.json()
+        if(data.friends === undefined)
+            return
         if(data.status === "success" && data.friends.length > 0) {
             setFriendList(data.friends)
         }
