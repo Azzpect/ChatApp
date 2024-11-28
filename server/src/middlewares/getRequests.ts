@@ -15,7 +15,7 @@ export default async function getRequests(req: Request, res: Response, next: Nex
         })
         req.body.queryResult = {status: "success", requests: requestData, code: 200}
     } catch (err) {
-        logger.error("Error in getRequests middleware: ", err);
+        logger.error("Error in getRequests middleware: ", (err as Error).message);
         req.body.queryResult = {status: "error", code: 500, msg: "Internal Server Error"}
     }
     finally {

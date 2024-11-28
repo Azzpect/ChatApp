@@ -77,7 +77,7 @@ function Requests() {
     const [requests, setRequests]  = useState<RequestCardProps[]>([])
 
     async function getPendingRequests() {
-        const res = await fetch(`http://localhost:8080/get-requests?userId=${user.userId}`)
+        const res = await fetch(`http://localhost:8080/get-requests?userId=${encodeURIComponent(user.userId)}`)
         const data = await res.json()
         console.log(data);
         if(data.status === "success")
@@ -109,6 +109,42 @@ interface RequestCardProps {
 }
 
 function RequestCard({requestId, profilePic, username}: RequestCardProps) {
+
+    const {changeNotification} = useContext(NotificationContext)
+    const {user, changeUser} = useContext(UserContext)
+
+    const acceptRequest = async (e: React.SyntheticEvent<HTMLButtonElement>) => {
+        const res = await fetch(`http://localhost:8080/accept-request`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                requestId: (e.target as HTMLButtonElement).parentElement?.parentElement?.getAttribute("data-request-id") as string
+            })
+        })
+        const data = await res.json()
+        if(data.status === "success")
+            changeUser({...user})
+        changeNotification(data.status, data.msg)
+    }
+
+    const declineRequest = async (e: React.SyntheticEvent<HTMLButtonElement>) => {
+        const res = await fetch(`http://localhost:8080/decline-request`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                requestId: (e.target as HTMLButtonElement).parentElement?.parentElement?.getAttribute("data-request-id") as string
+            })
+        })
+        const data = await res.json()
+        if(data.status === "success")
+            changeUser({...user})
+        changeNotification(data.status, data.msg)
+    }
+
     return (
         <div data-request-id={requestId} className="request-card">
             <div className="details">
@@ -116,8 +152,8 @@ function RequestCard({requestId, profilePic, username}: RequestCardProps) {
                 <h3>{username}</h3>
             </div>
             <div className="request-btn-container">
-                <button>Accept</button>
-                <button>Decline</button>
+                <button onClick={acceptRequest}>Accept</button>
+                <button onClick={declineRequest}>Decline</button>
             </div>
         </div>
     )

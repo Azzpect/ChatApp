@@ -17,12 +17,12 @@ export default async function getAllFriends(req: Request, res: Response, next: N
                 {status: "accepted"}
             ]
         }).select("-status")
-        const [friends] = await Promise.all(friendRequests.map(async (request) => {
+        const friends = await Promise.all(friendRequests.map(async (request) => {
             if(request.from === userId) {
-                return await UserModel.find({userId: request.to}).select("-_id -password -__v -createdAt -email")
+                return await UserModel.findOne({userId: request.to}).select("-_id -password -__v -createdAt -email")
             }
             else {
-                return await UserModel.find({userId: request.from}).select("-_id -password -__v -createdAt -email")
+                return await UserModel.findOne({userId: request.from}).select("-_id -password -__v -createdAt -email")
             }
         }))
         req.body.queryResult = {status: "success", friends: friends, code: 200}
