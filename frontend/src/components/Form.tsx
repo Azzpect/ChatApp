@@ -15,7 +15,7 @@ export default function Form() {
     const authenticateUser = async () => {
         const userId: string | undefined = localStorage.getItem("userId")?.trim()
         if(userId === undefined || userId === "") {
-            changeUser({isValidUser: false, username: "", userId: "", profilePic: ""})
+            changeUser({username: "", userId: "", profilePic: ""})
             changeNotification("error", "Please log in")
         }
         else {
@@ -27,8 +27,8 @@ export default function Form() {
             })
             const data = await res.json();
             if(data.status === "success") {
-                changeUser({isValidUser: true, userId: userId, ...data.user})
-                connectSocket()
+                changeUser({userId: userId, ...data.user})
+                connectSocket(userId)
             }
             changeNotification(data.status, data.msg)
         }

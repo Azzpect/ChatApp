@@ -24,7 +24,7 @@ export default function Navbar() {
                     <h4 className="text-white font-semibold px-1">{user.username}</h4>
                 </div>
                 <Menu />
-                {!user.isValidUser && <Form />}
+                {user.userId === "" && <Form />}
             </nav>
             {notification.msg !== "" && <Notification />}
         </>

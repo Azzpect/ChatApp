@@ -4,13 +4,13 @@ import { userRouter } from "./routes/userRouter";
 import cors from "cors";
 import path from "path";
 import { friendsRouter } from "./routes/friendsRouter";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import { createServer } from "http";
-import { onConnection, onDisconnection, onMessage } from "./middlewares/webSocket";
+import { onConnection } from "./middlewares/webSocket";
+import messageRouter from "./routes/messageRouter";
 
 const app: Express = express();
 const server = createServer(app);
-export let webSocket: Socket;
 const io = new Server(server, {
     cors: {
         origin: ['http://localhost:5173'],
@@ -35,13 +35,11 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(userRouter)
 app.use(friendsRouter)
+app.use(messageRouter)
 
 //websocket connection
 io.on("connection", (socket) => {
-    webSocket = socket;
-    onConnection();
-    socket.on("disconnect", onDisconnection);
-    socket.on("message", onMessage)
+    onConnection(socket);
 });
 
 

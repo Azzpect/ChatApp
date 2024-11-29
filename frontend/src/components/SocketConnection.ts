@@ -1,28 +1,20 @@
 import { io } from "socket.io-client"
+import { Socket } from "socket.io-client"
+
+export let socket: Socket
 
 
-
-const socket = io("http://localhost:8080", {
-    autoConnect: false,
-})
-
-export const connectSocket = () => {
+export const connectSocket = (id: string) => {
+    socket = io("http://localhost:8080", {
+        autoConnect: false,
+        query: {userId: id}
+    })
     socket.connect()
+
 }
 
-export const disconnectSocket = () => {
-    socket.disconnect()
-}
-
-export const sendMessageToServer = (message: string) => {
-    socket.emit("message", message)
+export const sendMessageToServer = (message: string, receiverId: string) => {
+    socket.emit("chat-message", message, receiverId)
 }
 
 
-socket.on("connect", () => {
-    console.log("connected to server");
-})
-
-socket.on("disconnect", () => {
-    console.log("disconnect from server");
-})

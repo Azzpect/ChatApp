@@ -134,11 +134,15 @@
         @apply text-white text-lg font-semibold ml-3;
     }
 
+    .message-area>.message-container {
+        @apply flex flex-col w-4/5 pr-3 h-[65vh] py-3 mx-auto overflow-y-scroll;
+    }
+
     .message-area>.input-container {
         @apply row-start-3 row-end-4 col-start-1 col-end-2 flex justify-center items-center pb-5;
     }
     .message-area>.input-container>input {
-        @apply w-1/2 h-full rounded-xl bg-transparent text-white text-lg text-slate-400 pl-2 border-solid border-2 border-slate-400 outline-none;
+        @apply w-1/2 h-full rounded-xl bg-transparent text-white text-lg font-semibold text-slate-400 pl-2 border-solid border-2 border-slate-400 outline-none;
     }
 
 

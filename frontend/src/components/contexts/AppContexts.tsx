@@ -8,7 +8,7 @@ export interface ProviderPropType {
 
 
 
-export const UserContext = createContext({user: {isValidUser: false, username: "", userId: "", profilePic: ""}, changeUser: (value: UserState) => {console.log(value);}})
+export const UserContext = createContext({user: {username: "", userId: "", profilePic: ""}, changeUser: (value: UserState) => {console.log(value);}})
 
 export const NotificationContext = createContext({notification: {type: "", msg: ""}, changeNotification: (type: string, msg: string) => {
     console.log(type, msg);
