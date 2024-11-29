@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "concurrently \"rimraf dist/\" \"npx tsc --watch\" \"nodemon dist/index.js\""
+    "server": "concurrently \"rimraf dist/\" \"npx tsc --watch\" \"nodemon dist/index.js\"",
+    "build": "rimraf dist/ && tsc",
+    "production": "node --env=.env server/app.js"
   },
   "keywords": [],
   "author": "",

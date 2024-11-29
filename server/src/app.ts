@@ -13,12 +13,12 @@ const app: Express = express();
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:5173'],
+        origin: ['*'],
     }
 })
 const port: string | unknown = process.env.PORT
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: ['*'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -30,7 +30,7 @@ app.use(cors(corsOptions))
 app.use("/public/", express.static(path.join(__dirname, "../public")))
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("hello world")
+    res.sendFile(path.join(__dirname, "../index.html"))
 })
 
 app.use(userRouter)

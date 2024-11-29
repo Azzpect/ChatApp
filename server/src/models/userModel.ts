@@ -6,7 +6,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     password: String,
-    profilePic: {type: String, default: "http://localhost:8080/public/userIcon.svg"},
+    profilePic: {type: String, default: `${process.env.HOST}/public/userIcon.svg`},
     createdAt: { type: Date, default: Date.now },
 })
 

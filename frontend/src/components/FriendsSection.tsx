@@ -47,7 +47,7 @@ function AddFriend() {
             const name = (document.querySelector(".add-friend-section>.search-element>input") as HTMLInputElement).value.trim();
             if(name === "")
                 throw new Error("Please enter a name to search for")
-            const response = await fetch(`http://localhost:8080/get-people-list?name=${encodeURIComponent(name)}&userId=${encodeURIComponent(user.userId)}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/get-people-list?name=${encodeURIComponent(name)}&userId=${encodeURIComponent(user.userId)}`);
             const data = await response.json();
             setPeopleList(data.peopleList)
         }
@@ -180,7 +180,7 @@ function FriendCard({userId, profilePic, username, status}: FriendCardProps) {
 
     async function sendFriendRequest(e: React.SyntheticEvent<HTMLImageElement>) {
         const receiverId = (e.target as HTMLImageElement).parentElement?.getAttribute("data-user-id") as string
-        const res = await fetch("http://localhost:8080/add-friend", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/add-friend`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
