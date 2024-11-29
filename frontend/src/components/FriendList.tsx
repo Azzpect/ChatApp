@@ -15,7 +15,7 @@ export default function FriendList() {
     const {changeNotification} = useContext(NotificationContext)
 
     async function getFriends() {
-        const res = await fetch(`http://localhost:8080/get-friends?userId=${encodeURIComponent(user.userId)}`)
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/get-friends?userId=${encodeURIComponent(user.userId)}`)
         const data = await res.json()
         if(data.friends === undefined)
             return

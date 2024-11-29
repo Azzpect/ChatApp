@@ -40,7 +40,7 @@ export default function MessageArea() {
   }, [socket])
 
   async function getMessages() {
-    const res = await fetch(`http://localhost:8080/get-messages/?userId=${user.userId}&receiverId=${receiver.id}`) 
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/get-messages/?userId=${user.userId}&receiverId=${receiver.id}`) 
 
     const data = await res.json()
     if(data.status === "success")

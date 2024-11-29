@@ -24,7 +24,7 @@ export default function Profile() {
                 formData.append("profilePic", tempUser.profilePicFile)
             else
                 formData.append("profilePic", tempUser.profilePic)
-            const res = await fetch("http://localhost:8080/update-user", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/update-user`, {
                 method: "POST",
                 body: formData
             })

@@ -19,7 +19,7 @@ export default function Form() {
             changeNotification("error", "Please log in")
         }
         else {
-            const res = await fetch(`http://localhost:8080/get-user?userId=${encodeURIComponent(userId)}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/get-user?userId=${encodeURIComponent(userId)}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -57,7 +57,7 @@ export default function Form() {
         try{
             let data = {status: "", msg: "", userId: ""}
             if(formType === 1) {
-                const res = await fetch("http://127.0.0.1:8080/create-user", {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/create-user`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -70,7 +70,7 @@ export default function Form() {
                 changeNotification("success", data.msg)
             }
             else {
-                const res = await fetch("http://127.0.0.1:8080/auth-user", {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/auth-user`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

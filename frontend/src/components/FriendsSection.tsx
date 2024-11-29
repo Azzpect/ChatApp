@@ -77,7 +77,7 @@ function Requests() {
     const [requests, setRequests]  = useState<RequestCardProps[]>([])
 
     async function getPendingRequests() {
-        const res = await fetch(`http://localhost:8080/get-requests?userId=${encodeURIComponent(user.userId)}`)
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/get-requests?userId=${encodeURIComponent(user.userId)}`)
         const data = await res.json()
         if(data.status === "success")
             if(data.requests === undefined)
@@ -113,7 +113,7 @@ function RequestCard({requestId, profilePic, username}: RequestCardProps) {
     const {user, changeUser} = useContext(UserContext)
 
     const acceptRequest = async (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        const res = await fetch(`http://localhost:8080/accept-request`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/accept-request`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -129,7 +129,7 @@ function RequestCard({requestId, profilePic, username}: RequestCardProps) {
     }
 
     const declineRequest = async (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        const res = await fetch(`http://localhost:8080/decline-request`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/decline-request`, {
             headers: {
                 "Content-Type": "application/json"
             },

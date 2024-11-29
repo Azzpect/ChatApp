@@ -5,7 +5,7 @@ export let socket: Socket
 
 
 export const connectSocket = (id: string) => {
-    socket = io("http://localhost:8080", {
+    socket = io(import.meta.env.VITE_API_URL, {
         autoConnect: false,
         query: {userId: id}
     })
