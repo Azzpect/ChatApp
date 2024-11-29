@@ -154,7 +154,7 @@ export default function Form() {
 
     return (
         <>
-        <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl">
+        <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl border-white border-2 border-solid z-10">
             { formType === 2 && 
             <>
             <h3 className="text-white text-3xl font-bold mb-2">LogIn</h3>

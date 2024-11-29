@@ -20,7 +20,7 @@ export default function Navbar() {
             <nav className="navbar">
                 <h1 className="primary-heading">ChatAPP</h1>
                 <div onClick={toggleMenu}  className="profile-container">
-                    <img src={user.profilePic} alt="" className="w-8 rounded-full"/>
+                    <img src={user.profilePic} alt="" className="w-8 h-8 rounded-full"/>
                     <h4 className="text-white font-semibold px-1">{user.username}</h4>
                 </div>
                 <Menu />

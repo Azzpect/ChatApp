@@ -1,5 +1,5 @@
 import triangle from "../assets/triangle.svg"
-import { UserContext, NotificationContext } from "./contexts/AppContexts"
+import { UserContext, NotificationContext, ReceiverDetailsContext } from "./contexts/AppContexts"
 import { useContext, useEffect, useState } from "react"
 
 interface FriendCardProps {
@@ -44,10 +44,13 @@ export default function FriendList() {
 
 
 function FriendCard({profilePic, username, userId}: FriendCardProps) {
+
+    const {changeReceiverDetails} = useContext(ReceiverDetailsContext)
+
     return (
-        <div data-user-id={userId} className="group relative w-full overflow-x-visible">
-            <img src={profilePic} alt="" className="w-10 my-2 rounded-full mx-auto cursor-pointer"/>
-            <div className="absolute hidden group-hover:block left-[120%] top-1/2 -translate-y-1/2 bg-slate-900 p-2 whitespace-nowrap">
+        <div data-user-id={userId} onClick={() => {changeReceiverDetails({id: userId, username: username, profilePic: profilePic})}} className="group relative w-full overflow-x-visible">
+            <img src={profilePic} alt="" className="w-10 h-10 my-2 rounded-full mx-auto cursor-pointer"/>
+            <div className="absolute hidden group-hover:block left-[120%] top-1/2 -translate-y-1/2 bg-slate-900 p-2 whitespace-nowrap rounded-xl border-solid border-white border-2">
                 <img className="absolute right-full w-4 rotate-90" src={triangle} alt="" />
                 <h3 className="text-white">{username}</h3>
             </div>

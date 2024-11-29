@@ -5,6 +5,7 @@ import NotificationContextProvider from "./components/contexts/NotificationConte
 import UserContextProvider from "./components/contexts/UserContextProvider";
 import MessageArea from "./components/MessageArea";
 import FriendsSection from "./components/FriendsSection";
+import ReceiverDetailsContextProvider from "./components/contexts/ReceiverDetailsContextProvider";
 
 
 export default function App() {
@@ -14,10 +15,12 @@ export default function App() {
             <NotificationContextProvider>
                 <section className="app">
                     <Navbar />
-                    <FriendList />
+                    <ReceiverDetailsContextProvider>
+                        <FriendList />
+                        <MessageArea />
+                    </ReceiverDetailsContextProvider>
                     <Profile />
                     <FriendsSection />
-                    <MessageArea />
                 </section>
             </NotificationContextProvider>
         </UserContextProvider>

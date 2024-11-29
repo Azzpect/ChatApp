@@ -13,3 +13,7 @@ export const UserContext = createContext({user: {isValidUser: false, username: "
 export const NotificationContext = createContext({notification: {type: "", msg: ""}, changeNotification: (type: string, msg: string) => {
     console.log(type, msg);
 }})
+
+export const ReceiverDetailsContext = createContext({
+    receiver: {id: "", username: "", profilePic: ""},
+    changeReceiverDetails: (receiver: {id: string, username: string, profilePic: string}) => {console.log(receiver);}})
