@@ -9,7 +9,7 @@ interface FriendCardProps {
 }
 
 export default function FriendList() {
-    const [friendList, setFriendList] = useState<FriendCardProps[]>([{profilePic: "", username: "John Doe", userId: "12345"}])
+    const [friendList, setFriendList] = useState<FriendCardProps[]>([])
 
     const {user} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
@@ -28,7 +28,8 @@ export default function FriendList() {
     }
 
     useEffect(() => {
-        getFriends()
+        if(user.userId !== "")
+            getFriends()
     }, [user])
 
     return (

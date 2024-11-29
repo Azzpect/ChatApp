@@ -22,6 +22,13 @@ export default function FriendsSection() {
         setActiveBtn(parseInt(btn.value));
     }
 
+    useEffect(() => {
+        if(activeBtn === 1) {
+            const e = new Event("fetch-pending-requests")
+            document.dispatchEvent(e)
+        }
+    }, [activeBtn])
+
     return(
         <div className="friends-section">
             <div className="btn-container">
@@ -89,8 +96,8 @@ function Requests() {
     }
 
     useEffect(() => {
-        getPendingRequests()
-    }, [user])
+        document.addEventListener("fetch-pending-requests", getPendingRequests)
+    })
 
     return (
         <div className="requests-section friends-section-sub-element">

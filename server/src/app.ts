@@ -13,20 +13,16 @@ const app: Express = express();
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ['*'],
+        origin: '*',
     }
 })
 const port: string | unknown = process.env.PORT
-const corsOptions = {
-    origin: ['*'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-};
 
 connectToDB()
 app.use(express.json())
-app.use(cors(corsOptions))
+app.use(cors({
+    origin: "*"
+}))
 app.use("/public/", express.static(path.join(__dirname, "../public")))
 
 app.get("/", (req: Request, res: Response) => {

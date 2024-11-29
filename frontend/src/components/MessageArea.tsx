@@ -50,7 +50,8 @@ export default function MessageArea() {
   }
   
   useEffect(() => {
-    getMessages()
+    if(receiver.id !== "")
+      getMessages()
   }, [receiver])
 
   return (
