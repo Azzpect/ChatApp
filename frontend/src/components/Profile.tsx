@@ -44,7 +44,7 @@ export default function Profile() {
 
     return(
         <div className="profile">
-            <div className="relative flex justify-center">
+            <div className="relative w-full flex justify-center">
                 <img id="profilePic" src={tempUser.profilePic} alt="" className="rounded-full w-3/4"/>
                 <img src={edit} onClick={() => {
                     const filePicker = document.querySelector("#filePicker") as HTMLInputElement
