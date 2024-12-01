@@ -8,12 +8,10 @@ export default async function verifyEmail(req: Request, res: Response, next: Nex
     try {
         const {userId, type} = req.query;
         
-        const user = await TempUser.findOne({userId: userId}).lean()
-
-        if(!user)
-            throw new Error("<h1 style='color:red;text-align:center'>Invalid user</h1><p style='text-align:center'>Please try to sign up again.</p>");
-
         if(type === '1') {
+            const user = await TempUser.findOne({userId: userId}).lean()
+            if(!user)
+                throw new Error("<h1 style='color:red;text-align:center'>Invalid user</h1><p style='text-align:center'>Please try to sign up again.</p>");
             const newUser = new UserModel({...user})
             await newUser.save()
             await TempUser.deleteOne({userId: userId})

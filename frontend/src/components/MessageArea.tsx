@@ -13,15 +13,19 @@ export default function MessageArea() {
   const [messages, setMessages] = useState<{message: string, createdAt: string, type: string}[]>([])
 
   useEffect(() => {
+    const profile = document.querySelector(".profile") as HTMLElement
+    const friends = document.querySelector(".friends-section") as HTMLElement
+    const messageArea = document.querySelector(".message-area") as HTMLElement
     document.addEventListener("menuItemClicked", () => {
-      const profile = document.querySelector(".profile") as HTMLElement
-      const friends = document.querySelector(".friends-section") as HTMLElement
-      const messageArea = document.querySelector(".message-area") as HTMLElement
       if(!profile.classList.contains("active-profile") && !friends.classList.contains("active-friends-section"))
         messageArea.style.gridColumnEnd = "21"
       else
         messageArea.style.gridColumnEnd = "18"
     })
+    if(!profile.classList.contains("active-profile") && !friends.classList.contains("active-friends-section")) {
+      console.log("hello");
+      messageArea.style.gridColumnEnd = "21"
+    }
   })
 
 

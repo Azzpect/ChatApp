@@ -8,6 +8,7 @@ import multer from "multer";
 import path from "path";
 import { unlinkSync, existsSync } from "fs";
 import verifyEmail from "../middlewares/verifyEmail";
+import deleteUser from "../middlewares/deleteUser";
 
 
 export const userRouter = Router();
@@ -58,6 +59,13 @@ userRouter.get("/get-user", getUserDetails, (req: Request, res: Response) => {
 })
 
 userRouter.post("/update-user", upload.single("profilePic"), updateUser, (req: Request, res: Response) => {
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.json({...queryResult})
+})
+
+userRouter.post("/delete-user", deleteUser, (req: Request, res: Response) => {
     const {queryResult} = req.body
     res.status(queryResult.code)
     delete queryResult.code

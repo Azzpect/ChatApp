@@ -1,9 +1,12 @@
+import { useContext } from "react";
+import { UserContext } from "./contexts/AppContexts";
 
 
 
 export default function Menu() {
 
     const menuItemClicked = new CustomEvent("menuItemClicked");
+    const {changeUser} = useContext(UserContext)
 
     return(
         <div className="menu">
@@ -24,7 +27,7 @@ export default function Menu() {
                 document.querySelector(".profile")?.classList.remove("active-profile")
                 document.querySelector(".friends-section")?.classList.remove("active-friends-section")
                 localStorage.removeItem("userId")
-                window.location.reload()
+                changeUser({userId: "", username: "", profilePic: ""})
             }}>LogOut</h3>
         </div>
     )

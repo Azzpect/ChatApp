@@ -29,6 +29,8 @@ export default function Profile() {
                 body: formData
             })
             const data = await res.json()
+            if(data.status === "error")
+                throw new Error(data.msg)
             changeNotification("success", data.msg)
             changeUser(tempUser)
         }
@@ -37,6 +39,26 @@ export default function Profile() {
         }
     }
 
+    const deleteAccount = async () => {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/delete-user`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: user.userId
+                })
+            })
+            const data = await res.json()
+            if(data.status === "error")
+                throw new Error(data.msg)
+            window.location.reload()
+        }
+        catch(err) {
+            changeNotification("error", (err as Error).message)
+        }
+    }
 
     const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTempUser({...tempUser, username: e.target.value})
@@ -79,6 +101,7 @@ export default function Profile() {
                 }} src={edit} alt="" className="absolute w-5 right-0 top-0 cursor-pointer"/>
             </div>
             <button className="bg-white font-semibold px-5 py-2 rounded-xl mt-5" onClick={updateUserDetails}>Save</button>
+            <button className="bg-red-500 text-white font-semibold px-5 py-2 rounded-xl mt-5" onClick={deleteAccount}>Delete Account</button>
         </div>
     )
 }

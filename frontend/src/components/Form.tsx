@@ -153,43 +153,43 @@ export default function Form() {
     }, [])
 
     return (
-        <>
-        <form onSubmit={handleSubmit} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl border-white border-2 border-solid z-10">
-            { formType === 2 && 
-            <>
-            <h3 className="text-white text-3xl font-bold mb-2">LogIn</h3>
-            <div className="auth-input-container">
-                <input type="text" className="auth-input" name="username" id="" placeholder="Enter username" required/>
-            </div>
-            <div className="auth-input-container">
-                <input type="password" className="auth-input" name="password" id="" placeholder="Enter password" required/>
-            </div>
-            <input type="submit" className="border-2 border-white p-2 text-lg rounded-lg text-white font-bold cursor-pointer" value="LogIn" />
-            </>
-            }
-            { formType === 1 && 
-            <>
-            <h3 className="text-white text-3xl font-bold mb-2">SignUp</h3>
-            <div className="auth-input-container">
-                <input type="text" className="auth-input" name="username" id="" placeholder="Enter username" onChange={verifyUsername} required/>
-                <p className="auth-input-error-text">minimum 4 characters</p>
-            </div>
-            <div className="auth-input-container">
-                <input type="text" className="auth-input" name="email" id="" placeholder="Enter email" onChange={verifyEmail} required/>
-                <p className="auth-input-error-text">invalid email address</p>
-            </div>
-            <div className="auth-input-container">
-                <input type="password" className="auth-input" name="password" id="" placeholder="Enter password" onChange={verifyPassword} required/>
-                <p className="auth-input-error-text">atleast 8 characters</p>
-                <p className="auth-input-error-text">must have a uppercase character</p>
-                <p className="auth-input-error-text">must have a special character</p>
-            </div>
-            <input type="submit" className="border-2 border-white p-2 text-lg rounded-lg text-white font-bold cursor-pointer" value="Create" />
-            </>
-            }
-            {formType === 2 && <p className="text-white">Create an account.<button className="text-white font-bold" onClick={signUp}>SignUp</button></p>}
-            {formType === 1 && <p className="text-white">Already have an account?<button className="text-white font-bold" onClick={logIn}>LogIn</button></p>}
-        </form>
-        </>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-screen h-screen bg-transparent flex justify-center items-center z-10">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center px-10 py-14 bg-slate-800 rounded-3xl border-white border-2 border-solid z-10">
+                { formType === 2 && 
+                <>
+                <h3 className="text-white text-3xl font-bold mb-2">LogIn</h3>
+                <div className="auth-input-container">
+                    <input type="text" className="auth-input" name="username" id="" placeholder="Enter username" required/>
+                </div>
+                <div className="auth-input-container">
+                    <input type="password" className="auth-input" name="password" id="" placeholder="Enter password" required/>
+                </div>
+                <input type="submit" className="border-2 border-white p-2 text-lg rounded-lg text-white font-bold cursor-pointer" value="LogIn" />
+                </>
+                }
+                { formType === 1 && 
+                <>
+                <h3 className="text-white text-3xl font-bold mb-2">SignUp</h3>
+                <div className="auth-input-container">
+                    <input type="text" className="auth-input" name="username" id="" placeholder="Enter username" onChange={verifyUsername} required/>
+                    <p className="auth-input-error-text">minimum 4 characters</p>
+                </div>
+                <div className="auth-input-container">
+                    <input type="text" className="auth-input" name="email" id="" placeholder="Enter email" onChange={verifyEmail} required/>
+                    <p className="auth-input-error-text">invalid email address</p>
+                </div>
+                <div className="auth-input-container">
+                    <input type="password" className="auth-input" name="password" id="" placeholder="Enter password" onChange={verifyPassword} required/>
+                    <p className="auth-input-error-text">atleast 8 characters</p>
+                    <p className="auth-input-error-text">must have a uppercase character</p>
+                    <p className="auth-input-error-text">must have a special character</p>
+                </div>
+                <input type="submit" className="border-2 border-white p-2 text-lg rounded-lg text-white font-bold cursor-pointer" value="Create" />
+                </>
+                }
+                {formType === 2 && <p className="text-white">Create an account.<button className="text-white font-bold" onClick={signUp}>SignUp</button></p>}
+                {formType === 1 && <p className="text-white">Already have an account?<button className="text-white font-bold" onClick={logIn}>LogIn</button></p>}
+            </form>
+        </div>
     )
 }
