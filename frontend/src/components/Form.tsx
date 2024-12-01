@@ -81,9 +81,9 @@ export default function Form() {
                 if(data.status === "error")
                     throw new Error(data.msg)
                 changeNotification("success", data.msg)
+                localStorage.setItem("userId", data.userId as string)
+                authenticateUser()
             }
-            localStorage.setItem("userId", data.userId as string)
-            authenticateUser()
         }
         catch(err) {
             changeNotification("error", (err as Error).message)
@@ -110,7 +110,7 @@ export default function Form() {
     const verifyEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value
         const msgElement = e.target.parentElement?.childNodes[1] as HTMLParagraphElement
-        const emailPattern: RegExp = /^[^\s\W]+@[^\s\W\d]+\.com$/gm
+        const emailPattern: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         msgElement.style.display = "block"
         if(emailPattern.test(val)) {
             msgElement.style.display = "none"

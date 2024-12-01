@@ -7,6 +7,7 @@ import updateUser from "../middlewares/updateUser";
 import multer from "multer";
 import path from "path";
 import { unlinkSync, existsSync } from "fs";
+import verifyEmail from "../middlewares/verifyEmail";
 
 
 export const userRouter = Router();
@@ -33,6 +34,13 @@ userRouter.post("/create-user", createNewUser, (req: Request, res: Response) => 
     res.status(queryResult.code)
     delete queryResult.code
     res.json({...queryResult})
+})
+
+userRouter.get("/verify-email", verifyEmail, (req: Request, res: Response) => {
+    const {queryResult} = req.body
+    res.status(queryResult.code)
+    delete queryResult.code
+    res.send(`<div>${queryResult.msg}</div>`)
 })
 
 userRouter.post("/auth-user", authenticateUser, (req: Request, res: Response) => {
