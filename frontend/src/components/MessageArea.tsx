@@ -22,10 +22,6 @@ export default function MessageArea() {
       else
         messageArea.style.gridColumnEnd = "18"
     })
-    if(!profile.classList.contains("active-profile") && !friends.classList.contains("active-friends-section")) {
-      console.log("hello");
-      messageArea.style.gridColumnEnd = "21"
-    }
   })
 
 

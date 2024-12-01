@@ -159,6 +159,7 @@
     .notification {
         @apply py-4 text-white font-semibold rounded-md absolute top-8 -right-full cursor-pointer z-20;
     }
+
     .animate-bar {
         animation: animation-bar 3s linear forwards;
     }
@@ -193,8 +194,18 @@
             right: -100%;
         }
     }
-
-
-
+    
+    .animate-loader {
+        animation: loader 3s ease-in infinite;
+    }
+    
+    @keyframes loader {
+        0% {
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            transform: translate(60%, -50%);
+        }
+    }
     
 }

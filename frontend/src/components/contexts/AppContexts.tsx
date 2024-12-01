@@ -17,3 +17,5 @@ export const NotificationContext = createContext({notification: {type: "", msg: 
 export const ReceiverDetailsContext = createContext({
     receiver: {id: "", username: "", profilePic: ""},
     changeReceiverDetails: (receiver: {id: string, username: string, profilePic: string}) => {console.log(receiver);}})
+
+export const LoaderContext = createContext({loading: false, changeLoading: (value: boolean) => {console.log(value);}})

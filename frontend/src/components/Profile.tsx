@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { NotificationContext, UserContext } from "./contexts/AppContexts"
+import { LoaderContext, NotificationContext, UserContext } from "./contexts/AppContexts"
 import edit from "../assets/edit.svg"
 
 
@@ -7,6 +7,7 @@ export default function Profile() {
 
     const {user, changeUser} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
+    const {changeLoading} = useContext(LoaderContext)
 
     const [tempUser, setTempUser] = useState({...user, profilePicFile: new File([],"")})
 
@@ -17,6 +18,7 @@ export default function Profile() {
 
     const updateUserDetails = async () => {
         try {
+            changeLoading(true)
             const formData = new FormData()
             formData.append("userId", tempUser.userId)
             formData.append("username", tempUser.username)
@@ -36,6 +38,9 @@ export default function Profile() {
         }
         catch(err) {
             changeNotification("error", (err as Error).message)
+        }
+        finally {
+            changeLoading(false)
         }
     }
 

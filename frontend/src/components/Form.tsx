@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
-import { NotificationContext, UserContext } from "./contexts/AppContexts"
+import { LoaderContext, NotificationContext, UserContext } from "./contexts/AppContexts"
 import { connectSocket } from "./SocketConnection"
 
 
@@ -8,11 +8,14 @@ export default function Form() {
     const [formType, changeFormType] = useState(1)
     const {changeUser} = useContext(UserContext)
     const {changeNotification} = useContext(NotificationContext)
+    const {changeLoading} = useContext(LoaderContext)
     let validUsername: boolean = true
     let validEmail: boolean = true
     let validPassword: boolean = true
 
     const authenticateUser = async () => {
+        changeLoading(true)
+        await setTimeout(() => {}, 2000)
         const userId: string | undefined = localStorage.getItem("userId")?.trim()
         if(userId === undefined || userId === "") {
             changeUser({username: "", userId: "", profilePic: ""})
@@ -32,10 +35,8 @@ export default function Form() {
             }
             changeNotification(data.status, data.msg)
         }
+        changeLoading(false)
     }
-
-    
-    
     
     const signUp = () => {
         changeFormType(1)
@@ -49,6 +50,8 @@ export default function Form() {
         if(!(validUsername && validEmail && validPassword)) {
             return
         }
+        changeLoading(true)
+        await setTimeout(() => {}, 2000)
         const formData = new FormData(e.target as HTMLFormElement)
         const formObj: {[key: string]: string} = {}
         formData.forEach((value, key) => {
@@ -90,6 +93,7 @@ export default function Form() {
         }
         finally {
             (e.target as HTMLFormElement).reset()
+            changeLoading(false)
         }
     }
 
@@ -151,6 +155,12 @@ export default function Form() {
     useEffect(() => {
         authenticateUser()
     }, [])
+
+    useEffect(() => {
+        document.addEventListener("DOMContentLoaded", () => {
+            changeLoading(false)
+        })
+    })
 
     return (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-screen h-screen bg-transparent flex justify-center items-center z-10">

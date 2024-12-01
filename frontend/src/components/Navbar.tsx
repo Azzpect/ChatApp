@@ -1,8 +1,9 @@
 import Menu from "./Menu";
 import Form from "./Form";
 import Notification from "./Notification";
+import Loader from "./Loader";
 import { useContext } from "react";
-import { NotificationContext, UserContext } from "./contexts/AppContexts";
+import { LoaderContext, NotificationContext, UserContext } from "./contexts/AppContexts";
 
 
 
@@ -10,6 +11,7 @@ export default function Navbar() {
 
     const {notification} = useContext(NotificationContext)
     const {user} = useContext(UserContext)
+    const {loading} = useContext(LoaderContext)
 
     function toggleMenu() {
         document.querySelector(".menu")?.classList.toggle("active-menu")
@@ -17,6 +19,7 @@ export default function Navbar() {
 
     return (
         <>
+            {loading && <Loader />}
             <nav className="navbar">
                 <h1 className="primary-heading">ChatAPP</h1>
                 {user.userId !== "" && 
