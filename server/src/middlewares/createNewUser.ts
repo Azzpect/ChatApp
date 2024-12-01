@@ -27,7 +27,7 @@ export default async function createNewUser(req: Request, res: Response, next: N
         let user = new TempUser({userId: userId, username: username, email: email, password: userPassword})
         await user.save()
         logger.info(`User created with userId: ${userId}`)
-        const verificationMsg = `<div><h1>Verify your email</h1><p>Thank you for registering with us. Please verify your email by clicking on the link below:</p><a href='${process.env.HOST}/verify-email?userId=${userId}&type=1'>Verify Email</a><p>This link will expire in 24 hours.</p></div>`
+        const verificationMsg = `<div><h1>Verify your email</h1><p>Thank you for registering with us. Please verify your email by clicking on the link below:</p><a href='${process.env.HOST}/verify-email?userId=${userId}'>Verify Email</a><p>This link will expire in 24 hours.</p></div>`
         await sendEmail(email, "Verify your email", verificationMsg)
         req.body.queryResult = {status: "success", msg: "Verification email sent!", userId: userId, code: 201};
     } catch (error) {
