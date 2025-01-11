@@ -5,7 +5,7 @@
   "scripts": {
     "server": "concurrently \"rimraf dist/\" \"npx tsc --watch\" \"nodemon dist/index.js\"",
     "build": "npm install && rimraf dist/ && npx tspc",
-    "production": "node --env-file=.env dist/app.js"
+    "production": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
