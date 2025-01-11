@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .app {
+        display: grid;
+        grid-template-rows: 10vh 1fr;
+        grid-template-columns: repeat(20, minmax(0, 1fr));
+        @apply w-screen h-screen;
+    }
+    /*navbar style*/
+    .primary-heading {
+        @apply text-white font-black text-3xl;
+    }
+    .navbar {
+        @apply bg-slate-800 p-4 flex justify-between border-b-2 border-white border-solid;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 21;
+    }
+    .friends-bar {
+        @apply bg-slate-900 flex flex-col items-center;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    .active-menu {
+        display: block !important;
+    }
+    .menu {
+        @apply hidden absolute right-2 top-14 bg-slate-800 z-10;
+    }
+    .menu>h3 {
+        @apply text-white text-lg px-4 py-2 font-semibold cursor-pointer hover:bg-white hover:text-black;
+    }
+    .profile-container {
+        @apply flex items-center cursor-pointer;
+    }
+    /*menu area*/
+    .profile {
+        @apply hidden bg-slate-800 flex-col items-center pr-5 border-l-2 border-white border-solid;
+        grid-row-start: 2;
+        grid-column-start: 18;
+        grid-column-end: 21;
+    }
+    .active-profile {
+        display: flex !important;
+    }
+    .friends-section {
+        @apply hidden bg-slate-800 flex-col items-center border-l-2 border-white border-solid;
+        grid-row-start: 2;
+        grid-column-start: 18;
+        grid-column-end: 21;
+    }
+    .active-friends-section {
+        display: flex !important;
+    }
+    .friends-section>.btn-container {
+        @apply w-full flex justify-around items-center;
+    }
+    .btn-container>button {
+        @apply text-xs text-white font-semibold bg-transparent p-1 text-center;
+    }
+    .friends-section-sub-element {
+        @apply bg-slate-500 w-full h-full;
+    }
+    .active-friends-btn {
+        @apply bg-slate-500 !important;
+    }
+
+    .add-friend-section>.search-element {
+        @apply w-full flex justify-around items-center mt-3;
+    }
+    .add-friend-section>.search-element>input {
+        @apply w-3/4 bg-transparent border-solid border-white border-2 rounded-lg outline-none text-white text-sm pl-2;
+    }
+    .add-friend-section>.search-element>img {
+        @apply w-5 cursor-pointer;
+    }
+
+    .friend-card {
+        @apply flex justify-around items-center my-2;
+    }
+    .friend-card>img:nth-child(1) {
+        @apply w-12 h-12 rounded-full;
+    }
+    .friend-card>img:nth-child(3) {
+        @apply w-4 h-4 cursor-pointer;
+    }
+    .friend-card>h3 {
+        @apply text-white text-lg font-semibold w-1/2;
+    }
+
+    .request-card {
+        @apply flex flex-col justify-around items-center my-2;
+    }
+    .request-card>.details {
+        @apply w-full flex justify-around items-center;
+    }
+    .request-card>.details>img {
+        @apply w-12 h-12 rounded-full;
+    }
+    .request-card>.details>h3 {
+        @apply text-white text-lg font-semibold w-1/2;
+    }
+    .request-card>.request-btn-container {
+        @apply w-full flex justify-around items-center mt-2;
+    }
+    .request-card>.request-btn-container>button {
+        @apply bg-white rounded-lg p-2 cursor-pointer;
+    }
+    
+
+
+    /*message area*/
+    .message-area {
+        @apply bg-slate-800 grid grid-cols-1;
+        grid-template-rows: 10vh 1fr 10vh;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 21;
+    }
+    .message-area>.details {
+        @apply flex bg-slate-900 items-center px-10 py-3 row-start-1 row-end-2 col-start-1 col-end-2;
+    }
+    .message-area>.details>img {
+        @apply w-12 h-12 rounded-full ml-10;
+    }
+    .message-area>.details>h3 {
+        @apply text-white text-lg font-semibold ml-3;
+    }
+
+    .message-area>.message-container {
+        @apply flex flex-col w-4/5 pr-3 h-[65vh] py-3 mx-auto overflow-y-scroll;
+    }
+
+    .message-area>.input-container {
+        @apply row-start-3 row-end-4 col-start-1 col-end-2 flex justify-center items-center pb-5;
+    }
+    .message-area>.input-container>input {
+        @apply w-1/2 h-full rounded-xl bg-transparent text-white text-lg font-semibold text-slate-400 pl-2 border-solid border-2 border-slate-400 outline-none;
+    }
+
+
+    /*form element*/
+    .auth-input-container {
+        @apply mb-2;
+    }
+    .auth-input {
+        @apply outline-none rounded-lg pl-2 py-2 text-lg;
+    }
+    .auth-input-error-text {
+        @apply my-0 hidden text-xs font-semibold self-start pl-5;
+    }
+    .notification {
+        @apply py-4 text-white font-semibold rounded-md absolute top-8 -right-full cursor-pointer z-20;
+    }
+
+    .animate-bar {
+        animation: animation-bar 3s linear forwards;
+    }
+    .animate-slide-out {
+        animation: animation-slide-out 0.2s linear forwards;
+    }
+    .animate-slide-in {
+        animation: animation-slide-in 0.2s linear forwards;
+    }
+
+    @keyframes animation-bar {
+        from {
+            width: 100%;
+        }
+        to {
+            width: 0%;
+        }
+    }
+    @keyframes animation-slide-in {
+        from {
+            right: -100%;
+        }
+        to {
+            right: 1.25rem;
+        }
+    }
+    @keyframes animation-slide-out {
+        from {
+            right: 1.25rem;
+        }
+        to {
+            right: -100%;
+        }
+    }
+    
+    .animate-loader {
+        animation: loader 3s ease-in infinite;
+    }
+    
+    @keyframes loader {
+        0% {
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            transform: translate(60%, -50%);
+        }
+    }
+    
+}

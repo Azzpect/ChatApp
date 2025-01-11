@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "concurrently \"rimraf dist/\" \"npx tsc --watch\" \"nodemon dist/index.js\"",
+    "build": "npm install && rimraf dist/ && npx tsc",
+    "production": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.9.1",
+    "@types/nodemailer": "^6.4.17",
+    "@types/socket.io": "^3.0.1",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "socket.io": "^4.8.1",
+    "winston": "^3.17.0"
+  }
+}

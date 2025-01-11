@@ -1,0 +1,8 @@
+{
+  "exec": "node --env-file=.env dist/app.js",
+  "verbose": true,
+  "watch": ["dist/", ".env"],
+  "ext": "js,json",
+  "ignore": ["node_modules/"],
+  "delay": 1000
+}
